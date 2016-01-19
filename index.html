@@ -1,0 +1,74 @@
+<!DOCTYPE hml>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html {height: 100%}
+      body {height: 100%; margin 0; padding: 0;}
+      #mapDiv {height: 70%;}
+    </style>
+    <!--Access Google Maps API -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4WgGo4sd5R8PT30r7iz9brqAP_5Eipps">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(42.513053,-83.132193),
+          zoom: 16,
+          disableDefaultUI: true,
+          zoomControl: true,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL,
+            position: google.maps.ControlPosition.BOTTOM_LEFT
+          },
+          PanControl: true,
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+          },
+          scaleControl: true,
+          streetViewControl: true,
+          rotateControl: true
+        };
+        var src = 'http://ratmap.bobonthenet.com/genkml.php?v=' + Date.now();
+        var map = new google.maps.Map(document.getElementById("mapDiv"), mapOptions);
+        google.maps.event.addListener(map, 'click', function(event) {
+          displayCoordinates(event.latLng);
+        });
+        loadKmlLayer(src, map);
+      }
+      google.maps.event.addDomListener(window, "load", initialize);
+      function displayCoordinates(pnt) {
+
+          var lat = pnt.lat();
+          lat = lat.toFixed(4);
+          var lng = pnt.lng();
+          lng = lng.toFixed(4);
+          document.getElementById("frmLat").value = lat;
+          document.getElementById("frmLng").value = lng;
+      }
+      function loadKmlLayer(src, map) {
+        var kmlLayer = new google.maps.KmlLayer(src, {
+          suppressInfoWindows: true,
+          preserveViewport: true,
+          map: map
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="mapDiv"></div>
+    <div id="verminReportDiv">
+      <form id="verminReportForm" action="submitVermin.php" method="get">
+        <input type="radio" name="type" value="rat" checked><img src="rat.png"><br>
+        <input type="radio" name="type" value="fox"><img src="fox.png"><br>
+        Description:<input type="text" name="description"><br>
+        Location: <input id="frmLat" type="text" name="lat"><input id="frmLng" type="text" name="lng"><br>
+        Click on the map to populate the location.<br>
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+
+  </body
+</html>
