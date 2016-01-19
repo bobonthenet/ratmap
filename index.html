@@ -19,16 +19,9 @@
           zoomControl: true,
           zoomControlOptions: {
             style: google.maps.ZoomControlStyle.SMALL,
-            position: google.maps.ControlPosition.BOTTOM_LEFT
+            position: google.maps.ControlPosition.TOP_LEFT
           },
           PanControl: true,
-          mapTypeControl: true,
-          mapTypeControlOptions: {
-            mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
-            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
-          },
-          scaleControl: true,
-          streetViewControl: true,
           rotateControl: true
         };
         var src = 'http://ratmap.bobonthenet.com/genkml.php?v=' + Date.now();
